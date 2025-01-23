@@ -1,0 +1,1390 @@
+# 智谱AI语言模型GLM-4接口开发文档
+
+[学亮编程手记](https://zhangxueliang.blog.csdn.net)
+[收藏
+
+                              19](https://blog.csdn.net/a772304419/article/details/143485023)
+[chatgpt](https://blog.csdn.net/a772304419/category_12824601.html)
+[ChatGPT](https://so.csdn.net/so/search/s.do?q=ChatGPT&t=all&o=vip&s=&l=&f=&viparticle=&from_tracking_code=tag_word&from_code=app_blog_art)
+[zhipuai](https://so.csdn.net/so/search/s.do?q=zhipuai&t=all&o=vip&s=&l=&f=&viparticle=&from_tracking_code=tag_word&from_code=app_blog_art)
+[CC 4.0 BY-SA](http://creativecommons.org/licenses/by-sa/4.0/)
+[https://blog.csdn.net/a772304419/article/details/143485023](https://blog.csdn.net/a772304419/article/details/143485023)
+[版权](https://blog.csdn.net/a772304419/article/details/143485023)
+[chatgpt
+                                    专栏收录该内容](https://blog.csdn.net/a772304419/category_12824601.html)
+[订阅专栏](https://blog.csdn.net/a772304419/article/details/143485023)
+
+## https://blog.csdn.net/a772304419/article/details/143485023GLM-4
+
+GLM-4 提供了多款模型，适用于各种应用场景。查看GLM-4系列[模型比较](https://bigmodel.cn/dev/howuse/model)，选择最适合的模型。
+模型编码：glm-4-plus、glm-4-0520、glm-4 、glm-4-air、glm-4-airx、glm-4-long 、 glm-4-flashx 、 glm-4-flash
+
+### https://blog.csdn.net/a772304419/article/details/143485023同步调用
+
+接口请求
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求参数
+
+```
+Object
+```
+
+
+```
+String
+```
+
+
+```
+String
+```
+
+
+```
+Object
+```
+
+
+```
+"parameters": { "type": "object", "properties": { "location": { "type": "string", "description": "城市，例如：北京" }, "unit": { "type": "string", "enum": ["celsius", "fahrenheit"] }},"required": ["location"]}
+```
+
+[函数调用使用指南](https://www.bigmodel.cn/dev/howuse/functioncall)
+
+```
+Object
+```
+
+
+```
+String
+```
+
+
+```
+String
+```
+
+
+```
+从文档 "{{ knowledge }}" 中查找问题的答案 "{{question}}" 如果找到答案，仅使用文档的陈述来回答问题；如果未找到，则使用自己的知识回答，并告知用户此信息不是来自文档。不要重复问题，直接开始回答。
+```
+
+[Retrieval使用指南](https://www.bigmodel.cn/dev/howuse/retrieval)
+
+```
+Object
+```
+
+
+```
+Boolean
+```
+
+
+```
+True
+```
+
+
+```
+False
+```
+
+
+```
+String
+```
+
+
+```
+Boolean
+```
+
+[web_search使用指南](https://www.bigmodel.cn/dev/howuse/websearch)
+
+#### https://blog.csdn.net/a772304419/article/details/143485023message 格式
+System Message 格式
+
+```
+system
+```
+
+User Message Format
+
+```
+user
+```
+
+Assistant Message Format
+
+```
+assistant
+```
+
+
+```
+tool_calls
+```
+
+
+```
+content
+```
+
+
+```
+web_search
+```
+
+
+```
+retrieval
+```
+
+
+```
+function
+```
+
+Tool Message格式
+Tool Message表示调用工具后的返回结果。模型然后根据工具消息输出自然语言格式的消息给用户。
+
+```
+Tool Message
+```
+
+
+```
+工具消息
+```
+
+
+```
+tool
+```
+
+
+#### https://blog.csdn.net/a772304419/article/details/143485023响应参数
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求示例
+
+```
+from zhipuai import ZhipuAI
+client = ZhipuAI(api_key="")  # 请填写您自己的APIKey
+response = client.chat.completions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {"role": "user", "content": "作为一名营销专家，请为我的产品创作一个吸引人的口号"},
+        {"role": "assistant", "content": "当然，要创作一个吸引人的口号，请告诉我一些关于您产品的信息"},
+        {"role": "user", "content": "智谱AI开放平台"},
+        {"role": "assistant", "content": "点燃未来，智谱AI绘制无限，让创新触手可及！"},
+        {"role": "user", "content": "创作一个更精准且吸引人的口号"}
+    ],
+)
+print(response.choices[0].message)
+```
+
+
+```
+from zhipuai import ZhipuAI
+client = ZhipuAI(api_key="")  # 请填写您自己的APIKey
+response = client.chat.completions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {"role": "user", "content": "作为一名营销专家，请为我的产品创作一个吸引人的口号"},
+        {"role": "assistant", "content": "当然，要创作一个吸引人的口号，请告诉我一些关于您产品的信息"},
+        {"role": "user", "content": "智谱AI开放平台"},
+        {"role": "assistant", "content": "点燃未来，智谱AI绘制无限，让创新触手可及！"},
+        {"role": "user", "content": "创作一个更精准且吸引人的口号"}
+    ],
+)
+print(response.choices[0].message)
+```
+
+响应示例
+
+```
+{
+  "created": 1703487403,
+  "id": "8239375684858666781",
+  "model": "glm-4",
+  "request_id": "8239375684858666781",
+  "choices": [
+      {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+              "content": "以AI绘蓝图 — 智谱AI，让创新的每一刻成为可能。",
+              "role": "assistant"
+          }
+      }
+  ],
+  "usage": {
+      "completion_tokens": 217,
+      "prompt_tokens": 31,
+      "total_tokens": 248
+  }
+}
+```
+
+
+```
+{
+  "created": 1703487403,
+  "id": "8239375684858666781",
+  "model": "glm-4",
+  "request_id": "8239375684858666781",
+  "choices": [
+      {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+              "content": "以AI绘蓝图 — 智谱AI，让创新的每一刻成为可能。",
+              "role": "assistant"
+          }
+      }
+  ],
+  "usage": {
+      "completion_tokens": 217,
+      "prompt_tokens": 31,
+      "total_tokens": 248
+  }
+}
+```
+
+### https://blog.csdn.net/a772304419/article/details/143485023流式输出
+
+#### https://blog.csdn.net/a772304419/article/details/143485023响应参数
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求示例
+我们已经升级到最新的模型GLM-4和GLM-3-Turbo，支持系统提示、函数调用、检索、Web_Search等新功能。要使用这些新功能，需要升级到最新版本的Python SDK。如果您安装了旧版本的SDK，请更新到最新版本。
+
+```
+pip install --upgrade zhipuai
+```
+
+
+```
+pip install --upgrade zhipuai
+```
+
+
+```
+from zhipuai import ZhipuAI
+client = ZhipuAI(api_key="")  # 请填写您自己的APIKey
+response = client.chat.completions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {"role": "system", "content": "你是一个乐于回答各种问题的小助手，你的任务是提供专业、准确、有洞察力的建议。"},
+        {"role": "user", "content": "我对太阳系的行星非常感兴趣，尤其是土星。请提供关于土星的基本信息，包括它的大小、组成、环系统以及任何独特的天文现象。"},
+    ],
+    stream=True,
+)
+for chunk in response:
+    print(chunk.choices[0].delta)
+```
+
+
+```
+from zhipuai import ZhipuAI
+client = ZhipuAI(api_key="")  # 请填写您自己的APIKey
+response = client.chat.completions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {"role": "system", "content": "你是一个乐于回答各种问题的小助手，你的任务是提供专业、准确、有洞察力的建议。"},
+        {"role": "user", "content": "我对太阳系的行星非常感兴趣，尤其是土星。请提供关于土星的基本信息，包括它的大小、组成、环系统以及任何独特的天文现象。"},
+    ],
+    stream=True,
+)
+for chunk in response:
+    print(chunk.choices[0].delta)
+```
+
+响应示例:
+
+```
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"土"}}]}
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"星"}}]}
+....
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"，"}}]}
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"主要由"}}]}
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"finish_reason":"length","delta":{"role":"assistant","content":""}}],"usage":{"prompt_tokens":60,"completion_tokens":100,"total_tokens":160}}
+data: [DONE]
+```
+
+
+```
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"土"}}]}
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"星"}}]}
+....
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"，"}}]}
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"delta":{"role":"assistant","content":"主要由"}}]}
+data: {"id":"8313807536837492492","created":1706092316,"model":"glm-4","choices":[{"index":0,"finish_reason":"length","delta":{"role":"assistant","content":""}}],"usage":{"prompt_tokens":60,"completion_tokens":100,"total_tokens":160}}
+data: [DONE]
+```
+
+### https://blog.csdn.net/a772304419/article/details/143485023函数调用
+
+##### https://blog.csdn.net/a772304419/article/details/143485023请求示例
+
+```
+from zhipuai import ZhipuAI
+
+client = ZhipuAI(api_key="") # 请填写您自己的APIKey
+
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "query_train_info",
+            "description": "根据用户提供的信息查询火车时刻",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "departure": {
+                        "type": "string",
+                        "description": "出发城市或车站",
+                    },
+                    "destination": {
+                        "type": "string",
+                        "description": "目的地城市或车站",
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "要查询的火车日期",
+                    },
+                },
+                "required": ["departure", "destination", "date"],
+            },
+        }
+    }
+]
+messages = [
+    {
+        "role": "user",
+        "content": "你能帮我查一下2024年1月1日从北京南站到上海的火车票吗？"
+    }
+]
+response = client.chat.completions.create(
+    model="glm-4", # 请填写您要调用的模型名称
+    messages=messages,
+    tools=tools,
+    tool_choice="auto",
+)
+print(response.choices[0].message)
+```
+
+
+```
+from zhipuai import ZhipuAI
+
+client = ZhipuAI(api_key="") # 请填写您自己的APIKey
+
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "query_train_info",
+            "description": "根据用户提供的信息查询火车时刻",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "departure": {
+                        "type": "string",
+                        "description": "出发城市或车站",
+                    },
+                    "destination": {
+                        "type": "string",
+                        "description": "目的地城市或车站",
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "要查询的火车日期",
+                    },
+                },
+                "required": ["departure", "destination", "date"],
+            },
+        }
+    }
+]
+messages = [
+    {
+        "role": "user",
+        "content": "你能帮我查一下2024年1月1日从北京南站到上海的火车票吗？"
+    }
+]
+response = client.chat.completions.create(
+    model="glm-4", # 请填写您要调用的模型名称
+    messages=messages,
+    tools=tools,
+    tool_choice="auto",
+)
+print(response.choices[0].message)
+```
+
+响应示例
+
+```
+{
+  "id": "8231168139794583938",
+  "model": "glm-4",
+  "request_id": "8231168139794583938",
+  "created": 1703490288,
+  "choices": [
+      {
+          "finish_reason": "tool_calls",
+          "index": 0,
+          "message": {
+              "role": "assistant",
+              "tool_calls": [
+                  {
+                      "id": "call_8231168139794583938",
+                      "index": 0,
+                      "type": "function",
+                      "function": {
+                          "arguments": '{"date": "2024-01-01","departure": "北京南站","destination": "上海"}',
+                          "name": "query_train_info"
+                      }
+                  }
+              ]
+          }
+      }
+  ],
+  "usage": {
+      "completion_tokens": 31,
+      "prompt_tokens": 120,
+      "total_tokens": 151
+  }
+}
+```
+
+
+```
+{
+  "id": "8231168139794583938",
+  "model": "glm-4",
+  "request_id": "8231168139794583938",
+  "created": 1703490288,
+  "choices": [
+      {
+          "finish_reason": "tool_calls",
+          "index": 0,
+          "message": {
+              "role": "assistant",
+              "tool_calls": [
+                  {
+                      "id": "call_8231168139794583938",
+                      "index": 0,
+                      "type": "function",
+                      "function": {
+                          "arguments": '{"date": "2024-01-01","departure": "北京南站","destination": "上海"}',
+                          "name": "query_train_info"
+                      }
+                  }
+              ]
+          }
+      }
+  ],
+  "usage": {
+      "completion_tokens": 31,
+      "prompt_tokens": 120,
+      "total_tokens": 151
+  }
+}
+```
+
+### https://blog.csdn.net/a772304419/article/details/143485023异步调用
+接口请求
+
+```
+https://open.bigmodel.cn/api/paas/v4/async/chat/completions
+```
+
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求参数
+请求参数与同步API调用相同。
+
+#### https://blog.csdn.net/a772304419/article/details/143485023响应参数
+
+```
+PROCESSING
+```
+
+
+```
+SUCCESS
+```
+
+
+```
+FAIL
+```
+
+
+#### https://blog.csdn.net/a772304419/article/details/143485023调用示例
+
+```
+from zhipuai import ZhipuAI
+
+client = ZhipuAI(api_key="") # 请填写您自己的APIKey
+response = client.chat.asyncCompletions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {
+            "role": "user",
+            "content": "
+作为童话之王，请以始终保持一颗善良的心为主题，写一篇简短的童话故事。故事应能激发孩子们的学习兴趣和想象力，同时帮助他们更好地理解和接受故事中蕴含的道德和价值观。"
+        }
+    ],
+)
+print(response)
+```
+
+
+```
+from zhipuai import ZhipuAI
+
+client = ZhipuAI(api_key="") # 请填写您自己的APIKey
+response = client.chat.asyncCompletions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {
+            "role": "user",
+            "content": "
+作为童话之王，请以始终保持一颗善良的心为主题，写一篇简短的童话故事。故事应能激发孩子们的学习兴趣和想象力，同时帮助他们更好地理解和接受故事中蕴含的道德和价值观。"
+        }
+    ],
+)
+print(response)
+```
+
+响应示例
+
+```
+id='123456789' request_id='654321' model='glm-4' task_status='PROCESSING'
+```
+
+
+```
+id='123456789' request_id='654321' model='glm-4' task_status='PROCESSING'
+```
+
+### https://blog.csdn.net/a772304419/article/details/143485023任务结果查询
+接口请求
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求参数
+
+#### https://blog.csdn.net/a772304419/article/details/143485023响应参数
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求示例
+
+```
+import time
+from zhipuai import ZhipuAI
+
+client = ZhipuAI(api_key="") # 请填写您自己的APIKey
+
+response = client.chat.asyncCompletions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {
+            "role": "user",
+            "content": "
+作为童话之王，请以始终保持一颗善良的心为主题，写一篇简短的童话故事。故事应能激发孩子们的学习兴趣和想象力，同时帮助他们更好地理解和接受故事中蕴含的道德和价值观。"
+        }
+    ],
+)
+task_id = response.id
+task_status = ''
+get_cnt = 0
+
+while task_status != 'SUCCESS' and task_status != 'FAILED' and get_cnt <= 40:
+    result_response = client.chat.asyncCompletions.retrieve_completion_result(id=task_id)
+    print(result_response)
+    task_status = result_response.task_status
+
+    time.sleep(2)
+    get_cnt += 1
+```
+
+
+```
+import time
+from zhipuai import ZhipuAI
+
+client = ZhipuAI(api_key="") # 请填写您自己的APIKey
+
+response = client.chat.asyncCompletions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {
+            "role": "user",
+            "content": "
+作为童话之王，请以始终保持一颗善良的心为主题，写一篇简短的童话故事。故事应能激发孩子们的学习兴趣和想象力，同时帮助他们更好地理解和接受故事中蕴含的道德和价值观。"
+        }
+    ],
+)
+task_id = response.id
+task_status = ''
+get_cnt = 0
+
+while task_status != 'SUCCESS' and task_status != 'FAILED' and get_cnt <= 40:
+    result_response = client.chat.asyncCompletions.retrieve_completion_result(id=task_id)
+    print(result_response)
+    task_status = result_response.task_status
+
+    time.sleep(2)
+    get_cnt += 1
+```
+
+响应示例:
+
+### https://blog.csdn.net/a772304419/article/details/143485023任务结果查询
+
+```
+{"id":"123456789","request_id":"123123123","model":null,"task_status":"PROCESSING"}
+{"id":"123456789","request_id":"123123123","model":null,"task_status":"PROCESSING"}
+
+... ...
+
+{"id":"123456789","request_id":"123123123","model":null,"task_status":"PROCESSING"}
+{
+    "id": "123456789",
+    "request_id": "123123123",
+    "model": "glm-4",
+    "task_status": "SUCCESS",
+    "choices": [
+        {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+                "content": "从前，有一个美丽的村庄，那里的孩子们都喜欢一起玩耍、学习和探索。其中有一个小男孩叫小明，他有一颗善良的心，总是乐于帮助别人。
+
+一天，小明在森林里发现了一只翅膀受伤的小鸟，无法飞翔。小明心疼这只小鸟，便把它带回家，用温暖和爱心照顾它。在小明的细心照料下，小鸟的翅膀渐渐康复，开始在房间里飞来飞去。
+
+看到小鸟奇迹般的康复，小明对鸟类产生了浓厚的兴趣，想要了解更多关于鸟类的知识。他开始阅读有关鸟类的书籍，学习它们的习性和生活方式。通过学习，小明对鸟类有了深刻的了解，他和那只小鸟也建立了深厚的友谊。
+
+一天，小明在森林里散步时，发现了一只被困在猎人陷阱里的小兔子。小明毫不犹豫地救出了小兔子。小兔子感激地看着小明，并告诉他森林里有一个神秘的宝藏——一颗能实现愿望的魔法宝石。
+
+充满好奇心的小明决定去寻找这颗宝石。他带着小鸟和小兔子踏上了冒险之旅。在旅途中，他们遇到了许多挑战，但小明始终保持着善良的心，勇敢地面对每一个困难。他不仅学会了如何与森林里的动物相处，还学会了许多生存技能。
+
+经过一段时间的努力，小明终于找到了那颗魔法宝石。宝石发出耀眼的光芒，将小明和他的朋友们带到了一个美丽的世界。在那里，他们遇到了一位智慧的老人，老人告诉小明，宝石的力量来自于一个人的善良之心。只有拥有善良之心的人才能激活宝石的力量，实现自己的愿望。
+
+小明明白了这个道理，感谢了老人，带着宝石回到了现实世界。他用宝石的力量帮助他人，让村庄变得更加美好。小明成为了村庄里的榜样，通过他的行动，孩子们明白了始终保持一颗善良的心的重要性。
+
+从此以后，小明和村民们幸福地生活在一起。听过小明故事的孩子们明白了善良之心的重要性。他们以小明为榜样，努力成为一个有爱心、有责任感的人。在这个过程中，他们的学习兴趣和想象力也被激发，成长为优秀的孩子。
+
+这个故事告诉我们，始终保持一颗善良的心，用我们的行动去影响周围的人。只有拥有善良之心的人，才能解锁自己的潜力，实现梦想。让我们都努力成为一个有善良之心的人。",
+                "role": "assistant",
+                "tool_calls": null
+            }
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 52,
+        "completion_tokens": 470,
+        "total_tokens": 522
+    }
+}
+```
+
+### https://blog.csdn.net/a772304419/article/details/143485023任务结果查询
+
+```
+{"id":"123456789","request_id":"123123123","model":null,"task_status":"PROCESSING"}
+{"id":"123456789","request_id":"123123123","model":null,"task_status":"PROCESSING"}
+
+... ...
+
+{"id":"123456789","request_id":"123123123","model":null,"task_status":"PROCESSING"}
+{
+    "id": "123456789",
+    "request_id": "123123123",
+    "model": "glm-4",
+    "task_status": "SUCCESS",
+    "choices": [
+        {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+                "content": "从前，有一个美丽的村庄，那里的孩子们都喜欢一起玩耍、学习和探索。其中有一个小男孩叫小明，他有一颗善良的心，总是乐于帮助别人。
+
+一天，小明在森林里发现了一只翅膀受伤的小鸟，无法飞翔。小明心疼这只小鸟，便把它带回家，用温暖和爱心照顾它。在小明的细心照料下，小鸟的翅膀渐渐康复，开始在房间里飞来飞去。
+
+看到小鸟奇迹般的康复，小明对鸟类产生了浓厚的兴趣，想要了解更多关于鸟类的知识。他开始阅读有关鸟类的书籍，学习它们的习性和生活方式。通过学习，小明对鸟类有了深刻的了解，他和那只小鸟也建立了深厚的友谊。
+
+一天，小明在森林里散步时，发现了一只被困在猎人陷阱里的小兔子。小明毫不犹豫地救出了小兔子。小兔子感激地看着小明，并告诉他森林里有一个神秘的宝藏——一颗能实现愿望的魔法宝石。
+
+充满好奇心的小明决定去寻找这颗宝石。他带着小鸟和小兔子踏上了冒险之旅。在旅途中，他们遇到了许多挑战，但小明始终保持着善良的心，勇敢地面对每一个困难。他不仅学会了如何与森林里的动物相处，还学会了许多生存技能。
+
+经过一段时间的努力，小明终于找到了那颗魔法宝石。宝石发出耀眼的光芒，将小明和他的朋友们带到了一个美丽的世界。在那里，他们遇到了一位智慧的老人，老人告诉小明，宝石的力量来自于一个人的善良之心。只有拥有善良之心的人才能激活宝石的力量，实现自己的愿望。
+
+小明明白了这个道理，感谢了老人，带着宝石回到了现实世界。他用宝石的力量帮助他人，让村庄变得更加美好。小明成为了村庄里的榜样，通过他的行动，孩子们明白了始终保持一颗善良的心的重要性。
+
+从此以后，小明和村民们幸福地生活在一起。听过小明故事的孩子们明白了善良之心的重要性。他们以小明为榜样，努力成为一个有爱心、有责任感的人。在这个过程中，他们的学习兴趣和想象力也被激发，成长为优秀的孩子。
+
+这个故事告诉我们，始终保持一颗善良的心，用我们的行动去影响周围的人。只有拥有善良之心的人，才能解锁自己的潜力，实现梦想。让我们都努力成为一个有善良之心的人。",
+                "role": "assistant",
+                "tool_calls": null
+            }
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 52,
+        "completion_tokens": 470,
+        "total_tokens": 522
+    }
+}
+```
+
+links： [https://open.bigmodel.cn/dev/api/normal-model/glm-4](https://open.bigmodel.cn/dev/api/normal-model/glm-4)
+[关注博主即可阅读全文](https://blog.csdn.net/a772304419/article/details/143485023)
+立减 ¥
+[立即使用](https://mall.csdn.net/vip)
+[学亮编程手记](https://zhangxueliang.blog.csdn.net)
+[关注](javascript:;)
+[关注](https://blog.csdn.net/a772304419/article/details/143485023)
+- 
+              [31](https://blog.csdn.net/a772304419/article/details/143485023)
+              点赞
+
+- 
+              https://blog.csdn.net/a772304419/article/details/143485023
+              踩
+
+- 
+              [19](javascript:;)
+
+
+
+                    收藏
+
+
+
+
+
+                  觉得还不错?
+
+                    一键收藏
+
+
+
+
+
+- 
+
+
+                知道了
+
+                0
+              评论
+
+- 
+
+
+                分享
+
+
+
+
+                    复制链接
+
+
+                    分享到 QQ
+
+
+                    [分享到新浪微博](https://blog.csdn.net/a772304419/article/details/143485023)
+
+
+
+
+                      扫一扫
+
+
+
+
+
+- 
+                  [打赏](javascript:;)
+                  打赏
+
+- 
+
+
+
+
+
+
+
+
+                      打赏
+
+### https://blog.csdn.net/a772304419/article/details/143485023任务结果查询
+
+[举报](https://blog.csdn.net/a772304419/article/details/143485023)
+
+
+
+
+                  举报
+
+
+
+
+[31](https://blog.csdn.net/a772304419/article/details/143485023)
+[19](javascript:;)
+0
+[分享](javascript:;)
+[复制链接](https://blog.csdn.net/a772304419/article/details/143485023)
+[分享到 QQ](https://blog.csdn.net/a772304419/article/details/143485023)
+[分享到新浪微博](https://blog.csdn.net/a772304419/article/details/143485023)
+[打赏](javascript:;)
+[打赏](https://blog.csdn.net/a772304419/article/details/143485023)
+[举报](https://blog.csdn.net/a772304419/article/details/143485023)
+[举报](https://blog.csdn.net/a772304419/article/details/143485023)
+[专栏目录](https://blog.csdn.net/a772304419/article/details/143485023)
+[【深度学习】大模型GLM-4-9B Chat ，微调与部署(3) TensorRT-LLM、TensorRT量化加速、Triton部署](https://qq742971636.blog.csdn.net/article/details/140636899)
+[q742971636的博客](https://blog.csdn.net/x1131230123)
+[TensorRT-LLM官方目前说在v0.12.0版本才会支持GLM-4-9B Chat ，下面以v0.10.0的魔改来做GLM-4-9B Chat的量化部署。本文目标就是加速GLM-4-9B Chat，看看能多快。A100卡。](https://qq742971636.blog.csdn.net/article/details/140636899)
+[初识langchain[1]：Langchain实战教学，利用qwen2.1与GLM-4大模型构建智能解决方案[含Agent、tavily面向AI搜索]](https://blog.csdn.net/sinat_39620217/article/details/140459138)
+[丨汀、的博客](https://blog.csdn.net/sinat_39620217)
+[初识langchain[1]：Langchain实战教学，利用qwen2.1与GLM-4大模型构建智能解决方案[含Agent]](https://blog.csdn.net/sinat_39620217/article/details/140459138)
+[【LLM】大模型工具调用之AllTools模型](https://andyguo.blog.csdn.net/article/details/143134668)
+[发现问题，并解决问题，批判性思维](https://blog.csdn.net/qq_35812205)
+[Zhipuai的GLM-4-AllTools 是专门为支持智能体和相关任务而进一步优化的模型版本。它能够自主理解用户的意图，规划复杂的指令，并能够调用一个或多个工具（例如网络浏览器、代码解释器和文本生图像）以完成复杂的任务。
+
+截止20241021现在支持的工具：
+
+| 工具             | 介绍                                                                 |
+|----------------|----------------](https://andyguo.blog.csdn.net/article/details/143134668)
+[探索GLM4-ALLTools：全能AI工具箱，释放开发者潜能](https://blog.csdn.net/weixin_31083901/article/details/140055976)
+[weixin_31083901的博客](https://blog.csdn.net/weixin_31083901)
+[相信大家都已经听说过OpenAI宣布禁止对中国提供API服务的消息了，随之国内厂商也纷纷采取行动。智谱AI在6月25日特别宣布推出OpenAI API用户特别搬家计划，今天小智就带大家看看智谱AI最新的API能力。本系列合集，点击链接查看了解小智的粉丝相信对智谱AI都不陌生，在往期LangChain教程里，小智已经通过G...](https://blog.csdn.net/weixin_31083901/article/details/140055976)
+[打败GPT-4的最强开源中文大模型GLM-4终于亮相了（附：超详细搭建过程）](https://blog.csdn.net/m0_71062934/article/details/139551111)
+[m0_71062934的博客](https://blog.csdn.net/m0_71062934)
+[GLM-4是智谱AI研发的最新一代开源基座预训练大模型，与GPT-4性能比肩，尤其擅长中文处理。该模型在多个关键领域进行了升级，比如提高了上下文处理长度至128KB，加快推理速度并降低成本，增强智能特性。它在“大海捞针”测试中展现了极高的精确度，并在多模态能力上接近DALLE-3，拓宽了其在图像和语音等领域的应用范围。](https://blog.csdn.net/m0_71062934/article/details/139551111)
+[LLMs之GLM-4：GLM-4的简介(全覆盖【对话版即ChatGLM4的+工具调用+多模态文生图】能力→Agent)、安装和使用方法、案例应用之详细攻略](https://yunyaniu.blog.csdn.net/article/details/135636014)
+[头部AI社区或平台如有邀请博主AI技术主题演讲请私信—心比天高，仗剑走天涯，保持热爱，奔赴向梦想！低调，谦虚，自律，反思，成长，还算比较正能量的博主，公益免费传播…内心特别想在AI界做出一些可以推进历史进程影响力的技术(兴趣使然，有点小情怀，也有点使命感呀](https://blog.csdn.net/qq_41185868)
+[​
+
+### https://blog.csdn.net/a772304419/article/details/143485023任务结果查询
+
+LLMs之GLM-4：GLM-4的简介(全覆盖【对话版即ChatGLM4的+工具调用+多模态文生图】能力→Agent)、安装和使用方法、案例应用之详细攻略
+
+
+
+
+
+
+
+目录
+
+GLM-4的简介
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GLM-4的安装和使用方法
+
+
+
+
+
+GLM-4的案例应用
+
+
+
+
+
+
+GLM-4的简介
+2024年01月16日，智谱AI在「智谱AI技术开放日(Zhipu DevDay)」推出新一代基座大模型GLM-4。智谱AI发布 All Tools、GLMs、MaaS API、大模型](https://yunyaniu.blog.csdn.net/article/details/135636014)
+[对标ChatGPT生态: 智谱全新大模型 GLM-4 发布](https://blog.csdn.net/m0_37996629/article/details/135635486)
+[Jay的个人博客](https://blog.csdn.net/m0_37996629)
+[在大规模多任务语言理解评测中，GLM-4的表现明显优于GPT-3.5，其平均得分已经达到了GPT-4的95%水平，在某些特定任务上甚至表现相当；而在GSM8K数学评测数据集上，GLM-4的评分与GPT-4相比只有4.6%的差异；此外，在MATH数据集上，GLM-4的得分比GPT-3.5高出了15%，虽然相对于GPT-4稍逊9%。在中英文混合评测中，GLM-4在Prompt级别和中文方面的表现均达到了GPT-4的88%。](https://blog.csdn.net/m0_37996629/article/details/135635486)
+[智谱AI发布国产最强大模型GLM4，理解评测与数学能力仅次于Gemini Ultra和GPT-4，编程能力超过Gemini-pro，还有对标GPTs商店的GLMs](https://devpress.csdn.net/v1/article/detail/135637113)
+[DataLearnerAI](https://blog.csdn.net/df19900725)
+[这是在智谱AI开发者大会上推出的新一代基座大语言模型，GLM4相比较此前最大的特点是三个变化：性能全面提升、上下文长度更长、支持更强的多模态能力。GLM4（GLM4）详细信息 | 名称、简介、使用方法，开源情况，商用授权信息 | 数据学习 (DataLearner)](https://devpress.csdn.net/v1/article/detail/135637113)
+[GLM-4开源版本终于来了：超越Llama3，多模态比肩GPT4V，MaaS平台也大升级 | 最新快讯](https://blog.csdn.net/www3300300/article/details/139701224)
+[www3300300的专栏](https://blog.csdn.net/www3300300)
+[值得一提的是，GLM-4-Air 的 API 大幅提升了推理速度，相比 GLM-4-0116，GLM-4-Air 的推理速度提升了 200%，每秒可以输出 71 个 token，远远超过人眼的阅读速度。在强大的文本模型之外，智谱 AI 同时开源了基于 GLM-4-9B 的多模态模型 GLM-4V-9B。智谱表示，大模型价格调整是基于技术突破、算力效率提升和成本控制的综合结果，未来每隔一段时间就会对价格做出调整，以更好的满足开发者、客户的需求，极具竞争力的价格不仅是合理的，而且也符合自身的商业策略。](https://blog.csdn.net/www3300300/article/details/139701224)
+[智谱 AI 永久免费大模型接口调用源码（支持上下文、连续对话和对话记录保存）
+					最新发布](https://xiaoqiangclub.blog.csdn.net/article/details/143662916)
+[XiaoqiangClub的博客](https://blog.csdn.net/xiaoqiangclub)
+[智谱 AI 永久免费大模型接口调用源码（支持上下文、连续对话和对话记录保存）](https://xiaoqiangclub.blog.csdn.net/article/details/143662916)
+[智谱AI ChatGLM-4使用教程：增强检索](https://blog.csdn.net/weixin_46530492/article/details/140088749)
+[Cachel Wood的博客](https://blog.csdn.net/weixin_46530492)
+[通过在大语言模型生成答案之前，先从知识库中检索相关知识，然后将相关知识作为背景信息输入给大模型，有效地提升内容的准确性和相关性。支持将doc、docx、pdf、xlsx类型文件上传到知识库，支持自定义文件切片的大小和规则。文件大小不得超过50MB。用于管理文件，支持上传多个文件，并通过关联知识库ID后进行调用。知识库最大容量为1G、调用方式请参考接口文档。创建知识库后，您将获得一个知识库ID。调用模型服务时，传入知识库ID，使大模型能获取相关内容以响应用户查询。](https://blog.csdn.net/weixin_46530492/article/details/140088749)
+[智谱AI：ChatGLM API调用说明
+					热门推荐](https://zhzhx.blog.csdn.net/article/details/136344811)
+[采菊东篱下，Python满乾坤！](https://blog.csdn.net/xun527)
+
+### https://blog.csdn.net/a772304419/article/details/143485023任务结果查询
+
+[智谱AI与清华KEG实验室发布的ChatGLM大语言模型，支持8k上下文，在内容创作、文本理解、信息抽取等任务上表现突出。经过海量中英标识符的预训练与人类偏好对齐训练，相比一代模型在 MMLU、C-Eval、GSM8K 分别取得了16%、36%、280%的提升，并登顶中文任务榜单C-Eval。](https://zhzhx.blog.csdn.net/article/details/136344811)
+[GLM4模型环境配置+模型微调+模型部署学习笔记](https://devpress.csdn.net/v1/article/detail/140638059)
+[weixin_42264784的博客](https://blog.csdn.net/weixin_42264784)
+[本篇文章的目的在于记录视频学习如何对大预言模型的实操。](https://devpress.csdn.net/v1/article/detail/140638059)
+[Datawhale出品：《GLM-4 大模型部署微调教程》发布！](https://blog.csdn.net/Langchain/article/details/139649489)
+[Langchain的博客](https://blog.csdn.net/Langchain)
+[就在昨天，智谱 AI 发布了最新开源模型 GLM4,通过 10T 高质量多语言数据与更先进的训练技术,达到了更加出色的生成效果。](https://blog.csdn.net/Langchain/article/details/139649489)
+[5. GLM4入门介绍](https://shenzl.blog.csdn.net/article/details/136902882)
+[Andy_shenzl的博客](https://blog.csdn.net/Andy_shenzl)
+[也就是说，assistant消息和role消息是一一对应的，而且在一般情况下，assistant消息只会围绕messages参数中的最后一个role信息进行回答。system role用于身份设定不过，值得一提的是，user和assistant的这种提问方式尽管足够清晰，但往往形式上不够丰富，例如在实践中人们发现，给聊天机器人进行一个身份设置，其实是非常有效的引导模型创作我们想要的结果的方法，例如如果我们希望获得一个关于“什么是机器学习？](https://shenzl.blog.csdn.net/article/details/136902882)
+[【劲爆消息】GLM4 开源了！！！人工智能大模型又一大进步](https://blog.csdn.net/2301_76225313/article/details/141362155)
+[2301_76225313的博客](https://blog.csdn.net/2301_76225313)
+[在人工智能领域，开源项目总是能够激发社区的创新活力。今天，我们要分享一个令人震撼的消息：智谱 AI 推出的最新一代预训练模型 GLM-4 系列中的开源版本——GLM-4-9B，现已全面开源！GLM-4-9B 不仅仅是一个模型，它是智谱 AI 对深度学习和自然语言处理能力的一次全新探索。在语义理解、数学推理、代码执行等多个领域，GLM-4-9B 展现出了超越 Llama-3-8B 的卓越性能。](https://blog.csdn.net/2301_76225313/article/details/141362155)
+[MLM之GLM-4：GLM-4-9B的简介、安装和使用方法、案例应用之详细攻略](https://yunyaniu.blog.csdn.net/article/details/139512689)
+[头部AI社区或平台如有邀请博主AI技术主题演讲请私信—心比天高，仗剑走天涯，保持热爱，奔赴向梦想！低调，谦虚，自律，反思，成长，还算比较正能量的博主，公益免费传播…内心特别想在AI界做出一些可以推进历史进程影响力的技术(兴趣使然，有点小情怀，也有点使命感呀](https://blog.csdn.net/qq_41185868)
+[​
+MLM之GLM-4-9B：GLM-4-9B的简介、安装和使用方法、案例应用之详细攻略
+
+
+
+
+
+
+
+
+
+
+
+
+
+目录
+
+GLM-4的简介
+
+
+
+
+
+
+
+
+
+GLM-4-9B的安装和使用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GLM-4-9B的案例应用
+
+GLM-4的简介
+GLM-4-9B 是智谱 AI 推出的最新一代预训练模型 GLM-4 系列中的开源版本。 在语义、数学、推理、代码和知识等多方面的数据集测评中，GLM-4-9B及其人类偏好对齐的版本GLM](https://yunyaniu.blog.csdn.net/article/details/139512689)
+[开源大语言模型部署(GLM-4、Qwen2)](https://dreaming.blog.csdn.net/article/details/140619603)
+[a_dreaming的博客](https://blog.csdn.net/weixin_42535480)
+[在本地运行大模型，需要先保证自己有足够的资源。大模型一般运行在GPU上，这里以GLM-4-9B和Qwen2-7B为例来说明其硬件要求情况。](https://dreaming.blog.csdn.net/article/details/140619603)
+[学亮编程手记](https://zhangxueliang.blog.csdn.net)
+[Java领域优质创作者](https://i.csdn.net/)
+[7750
+                原创](https://zhangxueliang.blog.csdn.net)
+[189
+                周排名](https://blog.csdn.net/rank/list/weekly)
+[32
+                总排名](https://blog.csdn.net/rank/list/total)
+[私信](https://im.csdn.net/chat/a772304419)
+
+### https://blog.csdn.net/a772304419/article/details/143485023任务结果查询
+[关注](https://blog.csdn.net/a772304419/article/details/143485023)
+
+### 热门文章
+- 
+				[Java 如何将String转化为Int
+
+					666768](https://zhangxueliang.blog.csdn.net/article/details/79723249)
+
+- 
+				[IntelliJ IDEA教程之如何clean或者install Maven项目
+
+					116563](https://zhangxueliang.blog.csdn.net/article/details/79663445)
+
+- 
+				[Java冒泡排序代码实现
+
+					92129](https://zhangxueliang.blog.csdn.net/article/details/79440206)
+
+- 
+				[解决idea application context not configured for this file的问题
+
+					91166](https://zhangxueliang.blog.csdn.net/article/details/79680833)
+
+- 
+				[sublime text常用快捷键及多行光标批量操作教程
+
+					71222](https://zhangxueliang.blog.csdn.net/article/details/79343374)
+
+[Java 如何将String转化为Int
+
+					666768](https://zhangxueliang.blog.csdn.net/article/details/79723249)
+[IntelliJ IDEA教程之如何clean或者install Maven项目
+
+					116563](https://zhangxueliang.blog.csdn.net/article/details/79663445)
+[Java冒泡排序代码实现
+
+					92129](https://zhangxueliang.blog.csdn.net/article/details/79440206)
+[解决idea application context not configured for this file的问题
+
+					91166](https://zhangxueliang.blog.csdn.net/article/details/79680833)
+[sublime text常用快捷键及多行光标批量操作教程
+
+					71222](https://zhangxueliang.blog.csdn.net/article/details/79343374)
+
+### 分类专栏
+- 
+                [Linux](https://blog.csdn.net/a772304419/category_9613054.html)
+                1009篇
+
+- 
+                [chatgpt](https://blog.csdn.net/a772304419/category_12824601.html)
+                7篇
+
+- 
+                [数据库](https://blog.csdn.net/a772304419/category_12420499.html)
+                1127篇
+
+- 
+                [docker](https://blog.csdn.net/a772304419/category_9355920.html)
+                399篇
+
+- 
+                [Python](https://blog.csdn.net/a772304419/category_9731627.html)
+                487篇
+
+- 
+                [k8s](https://blog.csdn.net/a772304419/category_10100799.html)
+                542篇
+
+- 
+                [go](https://blog.csdn.net/a772304419/category_10412762.html)
+                454篇
+
+- 
+                [transmit](https://blog.csdn.net/a772304419/category_12535239.html)
+                1篇
+
+- 
+                [php](https://blog.csdn.net/a772304419/category_12708743.html)
+                61篇
+
+- 
+                [C#](https://blog.csdn.net/a772304419/category_12585818.html)
+                26篇
+
+- 
+                [JVM调优](https://blog.csdn.net/a772304419/category_9660630.html)
+                125篇
+
+- 
+                [经验分享](https://blog.csdn.net/a772304419/category_7077931.html)
+                589篇
+
+- 
+                [前端技术](https://blog.csdn.net/a772304419/category_7359930.html)
+                466篇
+
+- 
+                [后台编程](https://blog.csdn.net/a772304419/category_7359933.html)
+                1481篇
+
+- 
+                [scala](https://blog.csdn.net/a772304419/category_7512763.html)
+                222篇
+
+- 
+                [Java基础](https://blog.csdn.net/a772304419/category_8058605.html)
+                577篇
+
+- 
+                [大数据](https://blog.csdn.net/a772304419/category_9215582.html)
+                545篇
+
+[Linux](https://blog.csdn.net/a772304419/category_9613054.html)
+[chatgpt](https://blog.csdn.net/a772304419/category_12824601.html)
+[数据库](https://blog.csdn.net/a772304419/category_12420499.html)
+[docker](https://blog.csdn.net/a772304419/category_9355920.html)
+[Python](https://blog.csdn.net/a772304419/category_9731627.html)
+[k8s](https://blog.csdn.net/a772304419/category_10100799.html)
+[go](https://blog.csdn.net/a772304419/category_10412762.html)
+[transmit](https://blog.csdn.net/a772304419/category_12535239.html)
+[php](https://blog.csdn.net/a772304419/category_12708743.html)
+[C#](https://blog.csdn.net/a772304419/category_12585818.html)
+[JVM调优](https://blog.csdn.net/a772304419/category_9660630.html)
+[经验分享](https://blog.csdn.net/a772304419/category_7077931.html)
+[前端技术](https://blog.csdn.net/a772304419/category_7359930.html)
+[后台编程](https://blog.csdn.net/a772304419/category_7359933.html)
+[scala](https://blog.csdn.net/a772304419/category_7512763.html)
+[Java基础](https://blog.csdn.net/a772304419/category_8058605.html)
+[大数据](https://blog.csdn.net/a772304419/category_9215582.html)
+
+### 最新评论
+- 
+                两台Linux之间基于Samba实现文件共享、文件夹共享
+
+                    [。七十二。:](https://blog.csdn.net/laner__gg)
+                    你好，这种情况挂载后，重启之后路径就失效了，应该怎么处理？
+
+
+- 
+                最新 DockerHub 镜像源加速列表（2024年11月已更新）
+
+                    [一支花美男:](https://blog.csdn.net/meinanzi_xiao)
+                    感谢分享，这么多镜像收集起来不容易啊
+
+
+- 
+                sublime关于行操作的快捷键：如快速复制整行等
+
+                    [龙小天1992:](https://blog.csdn.net/a649339266)
+                    command+shift+c。仅复制，不粘贴
+
+
+- 
+                sublime关于行操作的快捷键：如快速复制整行等
+
+                    [龙小天1992:](https://blog.csdn.net/a649339266)
+                    第一个。不插入下一行就好了
+
+
+- 
+                Redis 缓存满了怎么办？（Redis内存淘汰策略）
+
+                    [宝码香车:](https://blog.csdn.net/qq_33650655)
+                    案例与技术结合得恰到好处，通过实际案例让技术原理变得生动易懂，赞不绝口。欢迎大佬前来指导，谢谢！！
+
+
+[两台Linux之间基于Samba实现文件共享、文件夹共享](https://zhangxueliang.blog.csdn.net/article/details/132098612)
+[。七十二。:](https://blog.csdn.net/laner__gg)
+                    你好，这种情况挂载后，重启之后路径就失效了，应该怎么处理？
+[最新 DockerHub 镜像源加速列表（2024年11月已更新）](https://zhangxueliang.blog.csdn.net/article/details/143630975)
+[一支花美男:](https://blog.csdn.net/meinanzi_xiao)
+                    感谢分享，这么多镜像收集起来不容易啊
+[sublime关于行操作的快捷键：如快速复制整行等](https://zhangxueliang.blog.csdn.net/article/details/110797945)
+[龙小天1992:](https://blog.csdn.net/a649339266)
+                    command+shift+c。仅复制，不粘贴
+[sublime关于行操作的快捷键：如快速复制整行等](https://zhangxueliang.blog.csdn.net/article/details/110797945)
+[龙小天1992:](https://blog.csdn.net/a649339266)
+                    第一个。不插入下一行就好了
+[Redis 缓存满了怎么办？（Redis内存淘汰策略）](https://zhangxueliang.blog.csdn.net/article/details/145091691)
+[宝码香车:](https://blog.csdn.net/qq_33650655)
+                    案例与技术结合得恰到好处，通过实际案例让技术原理变得生动易懂，赞不绝口。欢迎大佬前来指导，谢谢！！
+
+### 最新文章
+- 
+            [Flink通过DataStream API实现MySQL CDC代码示例](https://zhangxueliang.blog.csdn.net/article/details/145304446)
+
+- 
+            [sonarqube sonar-pmd-p3c插件源码编译](https://zhangxueliang.blog.csdn.net/article/details/145287360)
+
+- 
+            [Linux awk命令切割及拼接字符串使用示例](https://zhangxueliang.blog.csdn.net/article/details/145287112)
+
+[Flink通过DataStream API实现MySQL CDC代码示例](https://zhangxueliang.blog.csdn.net/article/details/145304446)
+[sonarqube sonar-pmd-p3c插件源码编译](https://zhangxueliang.blog.csdn.net/article/details/145287360)
+[Linux awk命令切割及拼接字符串使用示例](https://zhangxueliang.blog.csdn.net/article/details/145287112)
+[01月
+                        82篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2025&month=01)
+[2024年1481篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2024&month=12)
+[2023年1596篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2023&month=12)
+[2022年728篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2022&month=11)
+[2021年1538篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2021&month=12)
+[2020年1657篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2020&month=12)
+[2019年401篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2019&month=12)
+[2018年278篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2018&month=12)
+[2017年35篇](https://zhangxueliang.blog.csdn.net?type=blog&year=2017&month=12)
+
+### 相关专栏
+
+[深度学习机器学习
+                  专栏
+
+                72 人学习
+
+
+            深度学习](https://blog.csdn.net/x1131230123/category_9349720.html)
+深度学习机器学习
+专栏
+72 人学习
+深度学习
+[LLM工业级落地实践
+                  专栏
+
+                23 人学习
+
+
+            本专栏主要讲解：LLM的实际业务落地实践，应用方面包含NL2DSL（NL2SQL、NL2GQL）、AI智能分析、智能生成报告、AI Agent等；包含技术原理，技术选型，工业级技术方案，落地实践教学等，将会逐步更新。](https://blog.csdn.net/sinat_39620217/category_12635936.html)
+LLM工业级落地实践
+专栏
+23 人学习
+本专栏主要讲解：LLM的实际业务落地实践，应用方面包含NL2DSL（NL2SQL、NL2GQL）、AI智能分析、智能生成报告、AI Agent等；包含技术原理，技术选型，工业级技术方案，落地实践教学等，将会逐步更新。
+[示例源码
+                  专栏
+
+                9 人学习
+
+
+            在这个专栏中，您将找到一系列珍贵的示例源码，涵盖各种编程语言和技术领域。这些代码片段旨在帮助您快速掌握编程技巧，解决实际问题，以及提高您的开发效率。无论您是初学者还是经验丰富的开发者，这个专栏都将成为您的宝贵资源。让我们一起探索编程的奥秘吧！](https://blog.csdn.net/xiaoqiangclub/category_12505975.html)
+示例源码
+专栏
+9 人学习
+在这个专栏中，您将找到一系列珍贵的示例源码，涵盖各种编程语言和技术领域。这些代码片段旨在帮助您快速掌握编程技巧，解决实际问题，以及提高您的开发效率。无论您是初学者还是经验丰富的开发者，这个专栏都将成为您的宝贵资源。让我们一起探索编程的奥秘吧！
+
+### 分类专栏
+
+- 
+                                  [Linux](https://blog.csdn.net/a772304419/category_9613054.html)
+                                  1009篇
+
+- 
+                                  [chatgpt](https://blog.csdn.net/a772304419/category_12824601.html)
+                                  7篇
+
+- 
+                                  [数据库](https://blog.csdn.net/a772304419/category_12420499.html)
+                                  1127篇
+
+- 
+                                  [docker](https://blog.csdn.net/a772304419/category_9355920.html)
+                                  399篇
+
+- 
+                                  [Python](https://blog.csdn.net/a772304419/category_9731627.html)
+                                  487篇
+
+- 
+                                  [k8s](https://blog.csdn.net/a772304419/category_10100799.html)
+                                  542篇
+
+- 
+                                  [go](https://blog.csdn.net/a772304419/category_10412762.html)
+                                  454篇
+
+- 
+                                  [transmit](https://blog.csdn.net/a772304419/category_12535239.html)
+                                  1篇
+
+- 
+                                  [php](https://blog.csdn.net/a772304419/category_12708743.html)
+                                  61篇
+
+- 
+                                  [C#](https://blog.csdn.net/a772304419/category_12585818.html)
+                                  26篇
+
+- 
+                                  [JVM调优](https://blog.csdn.net/a772304419/category_9660630.html)
+                                  125篇
+
+- 
+                                  [经验分享](https://blog.csdn.net/a772304419/category_7077931.html)
+                                  589篇
+
+- 
+                                  [前端技术](https://blog.csdn.net/a772304419/category_7359930.html)
+                                  466篇
+
+- 
+                                  [后台编程](https://blog.csdn.net/a772304419/category_7359933.html)
+                                  1481篇
+
+- 
+                                  [scala](https://blog.csdn.net/a772304419/category_7512763.html)
+                                  222篇
+
+- 
+                                  [Java基础](https://blog.csdn.net/a772304419/category_8058605.html)
+                                  577篇
+
+- 
+                                  [大数据](https://blog.csdn.net/a772304419/category_9215582.html)
+                                  545篇
+
+[Linux](https://blog.csdn.net/a772304419/category_9613054.html)
+[chatgpt](https://blog.csdn.net/a772304419/category_12824601.html)
+[数据库](https://blog.csdn.net/a772304419/category_12420499.html)
+[docker](https://blog.csdn.net/a772304419/category_9355920.html)
+[Python](https://blog.csdn.net/a772304419/category_9731627.html)
+[k8s](https://blog.csdn.net/a772304419/category_10100799.html)
+[go](https://blog.csdn.net/a772304419/category_10412762.html)
+[transmit](https://blog.csdn.net/a772304419/category_12535239.html)
+[php](https://blog.csdn.net/a772304419/category_12708743.html)
+[C#](https://blog.csdn.net/a772304419/category_12585818.html)
+[JVM调优](https://blog.csdn.net/a772304419/category_9660630.html)
+[经验分享](https://blog.csdn.net/a772304419/category_7077931.html)
+[前端技术](https://blog.csdn.net/a772304419/category_7359930.html)
+[后台编程](https://blog.csdn.net/a772304419/category_7359933.html)
+[scala](https://blog.csdn.net/a772304419/category_7512763.html)
+[Java基础](https://blog.csdn.net/a772304419/category_8058605.html)
+[大数据](https://blog.csdn.net/a772304419/category_9215582.html)
+
+### 目录
+
+[为什么被折叠?](https://blogdev.blog.csdn.net/article/details/122245662)
+[到【灌水乐园】发言](https://bbs.csdn.net/forums/FreeZone)
+[查看更多评论](https://blog.csdn.net/a772304419/article/details/143485023)
+请填写红包祝福语或标题
+红包个数最小为10个
+红包金额最低5元
+[前往充值 >](https://i.csdn.net/)
+[规则](https://blog.csdn.net/a772304419/article/details/143485023)
+打赏作者
+学亮编程手记
+你的鼓励将是我创作的最大动力
+您的余额不足，请更换扫码支付或[充值](https://i.csdn.net/)
+[打赏作者](https://blog.csdn.net/a772304419/article/details/143485023)
+[使用余额支付](javascript:;)
+抵扣说明：
+1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。 2.余额无法直接购买下载，可以购买VIP、付费专栏及课程。
+[余额充值](https://i.csdn.net/)

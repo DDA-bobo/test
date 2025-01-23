@@ -1,0 +1,550 @@
+/* 基础样式设置 */
+:root {
+    --primary-color: #e60012; /* 春节红 */
+    --secondary-color: #ffd700; /* 金色 */
+    --text-color: #333;
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: #fff1f1 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="3" fill="%23e60012" opacity="0.1"/></svg>') repeat;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 添加春节装饰元素 */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,3l12,36h37l-30,22l11,36l-30-22l-30,22l11-36l-30-22h37z" fill="%23e60012" opacity="0.1"/></svg>');
+    background-size: contain;
+    z-index: -1;
+}
+
+body::before {
+    top: 0;
+    left: 0;
+    transform: rotate(-15deg);
+}
+
+body::after {
+    bottom: 0;
+    right: 0;
+    transform: rotate(15deg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 头部样式 */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+header::before,
+header::after {
+    content: "福";
+    position: absolute;
+    font-size: 4rem;
+    color: var(--primary-color);
+    opacity: 0.1;
+    font-family: "STKaiti", "楷体", serif;
+    transform: rotate(15deg);
+}
+
+header::before {
+    left: 10%;
+    top: -20px;
+}
+
+header::after {
+    right: 10%;
+    top: -20px;
+    transform: rotate(-15deg);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* 输入区域样式 */
+.input-section {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(230, 0, 18, 0.1);
+    margin-bottom: 2rem;
+    border: 2px solid rgba(230, 0, 18, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+}
+
+label {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* 波浪输入框效果 */
+.input-group {
+    position: relative;
+}
+
+input {
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    transition: var(--transition);
+    background: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.input-group::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.input-group:focus-within::after {
+    transform: translateX(0);
+    animation: wave 2s infinite linear;
+}
+
+@keyframes wave {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 0;
+    }
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(230, 0, 18, 0.1);
+}
+
+button {
+    background: linear-gradient(135deg, var(--primary-color), #ff4d4d);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+button::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+    transform: scale(0);
+    transition: transform 0.3s ease-out;
+}
+
+button:hover::after {
+    transform: scale(1);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(230, 0, 18, 0.2);
+}
+
+/* 加载动画 */
+.loading-section {
+    text-align: center;
+    padding: 2rem;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #fff;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 结果区域样式 */
+.result-section {
+    margin-top: 2rem;
+}
+
+.name-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(230, 0, 18, 0.1);
+    transition: var(--transition);
+    border: 1px solid rgba(230, 0, 18, 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.name-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 50px 50px 0;
+    border-color: transparent var(--primary-color) transparent transparent;
+    opacity: 0.1;
+}
+
+.name-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(230, 0, 18, 0.15);
+}
+
+.name-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.name-details {
+    display: grid;
+    gap: 1rem;
+}
+
+.detail-item {
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(230, 0, 18, 0.1);
+    transition: var(--transition);
+}
+
+.detail-item:hover {
+    background: rgba(230, 0, 18, 0.02);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+/* 特性展示区域 */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(230, 0, 18, 0.1);
+    border: 1px solid rgba(230, 0, 18, 0.1);
+}
+
+.feature {
+    text-align: center;
+    padding: 1.5rem;
+    position: relative;
+    transition: var(--transition);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    header::before,
+    header::after {
+        display: none;
+    }
+}
+
+/* 错误提示样式 */
+.error-message {
+    background-color: #fff3f3;
+    color: var(--primary-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-top: 1rem;
+    border-left: 4px solid var(--primary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.error-message::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(230, 0, 18, 0.05));
+}
+
+/* 添加灯笼样式 */
+.lantern {
+    position: fixed;
+    width: 60px;
+    height: 80px;
+    background: var(--primary-color);
+    border-radius: 50% / 10%;
+    animation: swing 3s infinite ease-in-out;
+    z-index: 100;
+}
+
+.lantern::before,
+.lantern::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    background: var(--secondary-color);
+}
+
+.lantern::before {
+    top: 0;
+    border-radius: 50% 50% 0 0;
+}
+
+.lantern::after {
+    bottom: 0;
+    border-radius: 0 0 50% 50%;
+}
+
+.lantern.left {
+    left: 5%;
+    top: 10%;
+    animation-delay: -0.5s;
+}
+
+.lantern.right {
+    right: 5%;
+    top: 10%;
+    animation-delay: -1s;
+}
+
+@keyframes swing {
+    0%, 100% {
+        transform: translateY(0) rotate(3deg);
+    }
+    50% {
+        transform: translateY(10px) rotate(-3deg);
+    }
+}
+
+/* 添加喜庆装饰 */
+.festival-decoration {
+    font-size: 2rem;
+    animation: bounce 2s infinite ease-in-out;
+    display: inline-block;
+    margin: 0 1rem;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 输入框波浪效果增强 */
+.input-wrapper {
+    position: relative;
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(230, 0, 18, 0.1);
+}
+
+.input-wrapper::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, 
+        var(--primary-color), 
+        var(--secondary-color), 
+        var(--primary-color));
+    background-size: 200% 100%;
+    animation: wave 2s linear infinite;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+@keyframes wave {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+/* 按钮特效 */
+button {
+    background: linear-gradient(135deg, var(--primary-color), #ff4d4d);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+button .icon {
+    margin-right: 0.5rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+button:hover .icon {
+    transform: rotate(360deg);
+}
+
+button::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+    transform: scale(0);
+    transition: transform 0.3s ease-out;
+}
+
+button:hover::after {
+    transform: scale(1);
+}
+
+/* 版权信息样式 */
+.copyright {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .lantern {
+        width: 40px;
+        height: 60px;
+    }
+
+    .festival-decoration {
+        font-size: 1.5rem;
+    }
+
+    .feature-icon {
+        font-size: 1.5rem;
+    }
+}

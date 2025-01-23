@@ -1,0 +1,233 @@
+### https://blog.csdn.net/a772304419/article/details/143485023同步调用
+
+接口请求
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求参数
+
+```
+Object
+```
+
+
+```
+String
+```
+
+
+```
+String
+```
+
+
+```
+Object
+```
+
+
+```
+"parameters": { "type": "object", "properties": { "location": { "type": "string", "description": "城市，例如：北京" }, "unit": { "type": "string", "enum": ["celsius", "fahrenheit"] }},"required": ["location"]}
+```
+
+[函数调用使用指南](https://www.bigmodel.cn/dev/howuse/functioncall)
+
+```
+Object
+```
+
+
+```
+String
+```
+
+
+```
+String
+```
+
+
+```
+从文档 "{{ knowledge }}" 中查找问题的答案 "{{question}}" 如果找到答案，仅使用文档的陈述来回答问题；如果未找到，则使用自己的知识回答，并告知用户此信息不是来自文档。不要重复问题，直接开始回答。
+```
+
+[Retrieval使用指南](https://www.bigmodel.cn/dev/howuse/retrieval)
+
+```
+Object
+```
+
+
+```
+Boolean
+```
+
+
+```
+True
+```
+
+
+```
+False
+```
+
+
+```
+String
+```
+
+
+```
+Boolean
+```
+
+[web_search使用指南](https://www.bigmodel.cn/dev/howuse/websearch)
+
+#### https://blog.csdn.net/a772304419/article/details/143485023message 格式
+System Message 格式
+
+```
+system
+```
+
+User Message Format
+
+```
+user
+```
+
+Assistant Message Format
+
+```
+assistant
+```
+
+
+```
+tool_calls
+```
+
+
+```
+content
+```
+
+
+```
+web_search
+```
+
+
+```
+retrieval
+```
+
+
+```
+function
+```
+
+Tool Message格式
+Tool Message表示调用工具后的返回结果。模型然后根据工具消息输出自然语言格式的消息给用户。
+
+```
+Tool Message
+```
+
+
+```
+工具消息
+```
+
+
+```
+tool
+```
+
+
+#### https://blog.csdn.net/a772304419/article/details/143485023响应参数
+
+#### https://blog.csdn.net/a772304419/article/details/143485023请求示例
+
+```
+from zhipuai import ZhipuAI
+client = ZhipuAI(api_key="")  # 请填写您自己的APIKey
+response = client.chat.completions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {"role": "user", "content": "作为一名营销专家，请为我的产品创作一个吸引人的口号"},
+        {"role": "assistant", "content": "当然，要创作一个吸引人的口号，请告诉我一些关于您产品的信息"},
+        {"role": "user", "content": "智谱AI开放平台"},
+        {"role": "assistant", "content": "点燃未来，智谱AI绘制无限，让创新触手可及！"},
+        {"role": "user", "content": "创作一个更精准且吸引人的口号"}
+    ],
+)
+print(response.choices[0].message)
+```
+
+
+```
+from zhipuai import ZhipuAI
+client = ZhipuAI(api_key="")  # 请填写您自己的APIKey
+response = client.chat.completions.create(
+    model="glm-4",  # 请填写您要调用的模型名称
+    messages=[
+        {"role": "user", "content": "作为一名营销专家，请为我的产品创作一个吸引人的口号"},
+        {"role": "assistant", "content": "当然，要创作一个吸引人的口号，请告诉我一些关于您产品的信息"},
+        {"role": "user", "content": "智谱AI开放平台"},
+        {"role": "assistant", "content": "点燃未来，智谱AI绘制无限，让创新触手可及！"},
+        {"role": "user", "content": "创作一个更精准且吸引人的口号"}
+    ],
+)
+print(response.choices[0].message)
+```
+
+响应示例
+
+```
+{
+  "created": 1703487403,
+  "id": "8239375684858666781",
+  "model": "glm-4",
+  "request_id": "8239375684858666781",
+  "choices": [
+      {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+              "content": "以AI绘蓝图 — 智谱AI，让创新的每一刻成为可能。",
+              "role": "assistant"
+          }
+      }
+  ],
+  "usage": {
+      "completion_tokens": 217,
+      "prompt_tokens": 31,
+      "total_tokens": 248
+  }
+}
+```
+
+
+```
+{
+  "created": 1703487403,
+  "id": "8239375684858666781",
+  "model": "glm-4",
+  "request_id": "8239375684858666781",
+  "choices": [
+      {
+          "finish_reason": "stop",
+          "index": 0,
+          "message": {
+              "content": "以AI绘蓝图 — 智谱AI，让创新的每一刻成为可能。",
+              "role": "assistant"
+          }
+      }
+  ],
+  "usage": {
+      "completion_tokens": 217,
+      "prompt_tokens": 31,
+      "total_tokens": 248
+  }
+}
+```

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能中文姓名生成器 - 春节特别版</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 添加图标字体 -->
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.css">
+    <!-- Add Google Fonts for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 添加装饰元素 -->
+    <div class="lantern left"></div>
+    <div class="lantern right"></div>
+    
+    <div class="container">
+        <header>
+            <div class="festival-decoration">🏮</div>
+            <h1>智能中文姓名生成器</h1>
+            <p class="subtitle">寓意吉祥，传承文化，为您定制完美中文名</p>
+            <div class="festival-decoration">🏮</div>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <div class="input-wrapper">
+                    <div class="input-group">
+                        <label for="englishName">
+                            <span class="icon">✨</span>
+                            请输入您的英文名
+                        </label>
+                        <input type="text" 
+                               id="englishName" 
+                               placeholder="例如：Alice" 
+                               autocomplete="off">
+                    </div>
+                    <button id="generateBtn" onclick="handleGenerate()">
+                        <span class="icon">🔮</span>
+                        开始生成
+                    </button>
+                </div>
+            </section>
+
+            <section class="loading-section" id="loadingSection" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>正在为您生成完美契合的中文名...</p>
+            </section>
+
+            <section class="result-section" id="resultSection">
+                <!-- 结果将在这里动态显示 -->
+            </section>
+        </main>
+
+        <footer>
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">🎯</span>
+                    <h3>完美契合</h3>
+                    <p>智能匹配发音，谐音自然</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🏮</span>
+                    <h3>文化传承</h3>
+                    <p>融入传统文化，寓意深远</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📚</span>
+                    <h3>详解释义</h3>
+                    <p>字字皆有解，义义皆关联</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>祝您新春快乐，万事如意 🎊</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
