@@ -110,4 +110,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 添加生成按钮点击事件
     document.getElementById('generateBtn').addEventListener('click', handleGenerate);
+
+    // 添加生成按钮点击事件
+    document.getElementById('generateButton').addEventListener('click', function() {
+        const englishName = document.getElementById('englishName').value;
+        const nameList = document.getElementById('nameList');
+        nameList.innerHTML = '';
+
+        // 发送 AJAX 请求到后端
+        fetch('/api/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: englishName })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 假设后端返回的名字在 data.names 中
+            data.names.forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                nameList.appendChild(li);
+            });
+            document.getElementById('resultSection').style.display = 'block';
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    function generateChineseNames(englishName) {
+        // 这里可以添加更复杂的生成逻辑
+        return [
+            '米凯乐 (Mi Kai Le)',
+            '迈克尔 (Mai Ke Er)',
+            '米高 (Mi Gao)'
+        ];
+    }
 });
