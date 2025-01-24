@@ -62,3 +62,45 @@ Output:
    - Cultural significance: Represents positivity and vitality
 
 [More examples in the application]
+
+## Deployment
+### Online Access
+Access the application online at: https://pm-rookie2025.github.io/test/
+
+### Local Development
+1. Clone the repository:
+```bash
+git clone https://github.com/pm-rookie2025/test.git
+cd test
+```
+2. Run the local server:
+```bash
+python3 server.py
+```
+3. Access:
+Open a browser and access http://localhost:8000
+
+## Technology Stack
+- Frontend: HTML5, CSS3, JavaScript
+- Backend: Python (Flask)
+- Deployment: GitHub Pages (static resources), Vercel (API)
+
+## Project Structure
+```
+.
+├── README.md           # Project documentation
+├── index.html         # Main webpage
+├── css/              # Style files
+│   └── style.css     # Main style file
+├── js/               # JavaScript files
+│   ├── config.js     # Configuration file
+│   ├── api.js        # API calls
+│   └── main.js       # Main logic
+└── server.py         # Backend server
+```
+
+## Contribution
+Welcome to submit Issues and Pull Requests!
+
+## License
+MIT License
